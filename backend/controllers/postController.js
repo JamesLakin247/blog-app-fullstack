@@ -17,7 +17,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
 // @route       GET /api/posts
 // @access      Private
 const getUserPosts = asyncHandler(async (req, res) => {
-    const posts = await Post.find({ user: req.user.id })
+    const posts = await Post.find({ user: req.user.id }).sort({'_id': -1})
 
     res.status(200).json(posts)
 })
