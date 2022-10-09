@@ -1,0 +1,39 @@
+const path = require('path')
+const express = require('express')
+const colors = require('colors')
+const dotenv = require('dotenv').config()
+const {errorHandler} = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
+const cors = require('cors')
+const allowedOrigins = require('./config/allowedOrigins')
+// import express from 'express'
+// import colors from 'colors'
+// import {errorHandler} from './middleware/errorMiddleware'
+// import connectDB from './config/db'
+
+const port = process.env.PORT || 5000
+
+connectDB()
+
+const app = express() 
+
+app.use(cors(allowedOrigins))
+
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.use('/api/posts', require('./routes/postRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
+
+// Serve frontend
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../frontend/build/index.html')))
+} else {
+    app.get('/', (req, res) => res.send('Please set to production'))
+}
+
+app.use(errorHandler)
+
+app.listen(port, () => console.log(`server started on port ${port}`))
