@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = "/api/users/" // base url e.g https://post-setter-backend.onrender.com/api/users/
+const API_URL = "https://blog-backend-60jy.onrender.com/api/users/" // base url e.g https://post-setter-backend.onrender.com/api/users/
 
 // register user
 const register = async (userData) => {

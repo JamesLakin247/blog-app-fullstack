@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = "/api/posts/"
+const API_URL = "https://blog-backend-60jy.onrender.com/api/posts/"
 
 // Get user posts
 const getPosts = async (token) => {
